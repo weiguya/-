@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบคำศัพท์ - My Vocab Notes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Quiz Setup Screen -->
+        <div id="quizSetup" class="quiz-setup">
+            <div class="card">
+                <div class="quiz-setup-header">
+                    <h1 class="quiz-setup-title">🎯 แบบทดสอบคำศัพท์</h1>
+                    <p class="quiz-setup-subtitle">เลือกจำนวนข้อที่ต้องการทดสอบ</p>
+                </div>
+
+                <div class="vocab-count-info">
+                    <div class="info-icon">📚</div>
+                    <div class="info-text">
+                        <span>คำศัพท์ที่มีในระบบ:</span>
+                        <strong id="totalVocabCount">0</strong> คำ
+                    </div>
+                </div>
+
+                <div class="quiz-options">
+                    <button class="quiz-option-btn" data-questions="5">
+                        <span class="option-number">5</span>
+                        <span class="option-label">ข้อ</span>
+                    </button>
+                    <button class="quiz-option-btn" data-questions="10">
+                        <span class="option-number">10</span>
+                        <span class="option-label">ข้อ</span>
+                    </button>
+                    <button class="quiz-option-btn" data-questions="20">
+                        <span class="option-number">20</span>
+                        <span class="option-label">ข้อ</span>
+                    </button>
+                </div>
+
+                <div class="quiz-setup-footer">
+                    <a href="index.html" class="btn btn-secondary">
+                        ← กลับหน้าแรก
+                    </a>
+                </div>
+
+                <div id="insufficientVocabWarning" class="warning-message" style="display: none;">
+                    <div class="warning-icon">⚠️</div>
+                    <div class="warning-text">
+                        <strong>คำศัพท์ไม่เพียงพอ!</strong>
+                        <p>กรุณาเพิ่มคำศัพท์อย่างน้อย <span id="minRequiredVocab">10</span> คำก่อนเริ่มทดสอบ</p>
+                        <a href="index.html" class="btn btn-primary" style="margin-top: 12px;">
+                            ไปเพิ่มคำศัพท์
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="quizScreen" class="quiz-screen" style="display: none;">
+            <!-- Quiz Header -->
+            <div class="quiz-header">
+                <div class="quiz-progress-bar">
+                    <div class="quiz-progress-fill" id="progressBar"></div>
+                </div>
+                <div class="quiz-meta">
+                    <span class="quiz-question-number">
+                        คำถามข้อที่ <strong id="currentQuestionNumber">1</strong> / <strong id="totalQuestions">10</strong>
+                    </span>
+                    <span class="quiz-score">
+                        คะแนน: <strong id="currentScore">0</strong>
+                    </span>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="card quiz-question-card">
+                <div class="question-label">คำศัพท์ภาษาอังกฤษ</div>
+                <h2 class="question-word" id="questionWord">Serendipity</h2>
+                <div class="question-prompt">เลือกความหมายที่ถูกต้อง</div>
+
+                <!-- Answer Options -->
+                <div class="answer-options" id="answerOptions">
+                    <!-- Answer buttons will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="results-screen" style="display: none;">
+            <div class="card results-card">
+                <div class="results-header">
+                    <div class="results-emoji" id="resultsEmoji">🎉</div>
+                    <h1 class="results-title" id="resultsTitle">ยอดเยี่ยม!</h1>
+                    <p class="results-subtitle" id="resultsSubtitle">คุณทำได้ดีมาก</p>
+                </div>
+
+                <div class="results-score">
+                    <div class="score-circle">
+                        <div class="score-number" id="finalScore">8</div>
+                        <div class="score-total">/ <span id="finalTotal">10</span></div>
+                    </div>
+                    <div class="score-percentage" id="scorePercentage">80%</div>
+                </div>
+
+                <div class="results-stats">
+                    <div class="stat-box stat-correct">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-value" id="correctCount">8</div>
+                        <div class="stat-label">ถูก</div>
+                    </div>
+                    <div class="stat-box stat-wrong">
+                        <div class="stat-icon">❌</div>
+                        <div class="stat-value" id="wrongCount">2</div>
+                        <div class="stat-label">ผิด</div>
+                    </div>
+                </div>
+
+                <!-- Review Section -->
+                <div class="review-section">
+                    <h3 class="review-title">📝 ทบทวนคำตอบ</h3>
+                    <div id="reviewList" class="review-list">
+                        <!-- Review items will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="results-actions">
+                    <a href="quiz.html" class="btn btn-primary">
+                        <span class="btn-icon">🔄</span>
+                        ทดสอบอีกครั้ง
+                    </a>
+                    <a href="index.html" class="btn btn-secondary">
+                        กลับหน้าแรก
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="quiz.js"></script>
+</body>
+</html>

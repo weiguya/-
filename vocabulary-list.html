@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>คำศัพท์ทั้งหมด A-Z - My Vocab Notes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="app-title">🔤 คำศัพท์ทั้งหมด (A-Z)</h1>
+                <p class="app-subtitle">เรียงตามตัวอักษร</p>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalWords">0</span>
+                    <span class="stat-label">คำทั้งหมด</span>
+                </div>
+            </div>
+            <a href="index.html" class="btn-view-all">
+                ← กลับหน้าแรก
+            </a>
+        </header>
+
+        <!-- Filter Section -->
+        <div class="card filter-section">
+            <div class="filter-row">
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="ค้นหาคำศัพท์..."
+                    >
+                </div>
+            </div>
+        </div>
+
+        <!-- Vocabulary List (A-Z) -->
+        <div class="vocab-list" id="vocabList">
+            <!-- Vocabulary items will be inserted here by JavaScript -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state" id="emptyState">
+            <div class="empty-icon">📝</div>
+            <h3>ยังไม่มีคำศัพท์</h3>
+            <p>กลับไปหน้าแรกเพื่อเพิ่มคำศัพท์ใหม่กันเถอะ!</p>
+            <a href="index.html" class="btn btn-primary" style="margin-top: 20px;">
+                <span class="btn-icon">➕</span>
+                ไปหน้าแรก
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastMessage"></span>
+    </div>
+
+    <script src="vocabulary-list.js"></script>
+</body>
+</html>
