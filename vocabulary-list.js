@@ -11,6 +11,7 @@ class VocabularyListApp {
     init() {
         this.loadFromLocalStorage();
         this.setupEventListeners();
+        this.createAlphabetFilter();
         this.renderVocabularies();
         this.updateStats();
         this.createEditModal();
@@ -156,8 +157,9 @@ class VocabularyListApp {
         // Generate HTML for each letter group
         let html = '';
         Object.keys(groupedVocabs).sort().forEach(letter => {
+            const count = groupedVocabs[letter].length;
             html += `
-                <div class="alphabet-section">
+                <div class="alphabet-section" id="letter-${letter}">
                     <div class="alphabet-letter">${letter}</div>
                     ${groupedVocabs[letter].map(vocab => this.createVocabItemHTML(vocab)).join('')}
                 </div>
@@ -165,6 +167,9 @@ class VocabularyListApp {
         });
 
         vocabList.innerHTML = html;
+
+        // Update alphabet filter after rendering
+        this.updateAlphabetFilter();
     }
 
     // Create vocab item HTML
@@ -313,6 +318,96 @@ class VocabularyListApp {
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
+    }
+
+    // Create alphabet filter sidebar
+    createAlphabetFilter() {
+        const filterContainer = document.getElementById('alphabetFilter');
+        if (!filterContainer) return;
+
+        // Create A-Z buttons
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        let html = '';
+
+        alphabet.forEach(letter => {
+            html += `
+                <button class="alphabet-btn" data-letter="${letter}">
+                    <span class="letter">${letter}</span>
+                    <span class="count">0</span>
+                </button>
+            `;
+        });
+
+        filterContainer.innerHTML = html;
+
+        // Add click event listeners
+        filterContainer.querySelectorAll('.alphabet-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const letter = btn.dataset.letter;
+                this.scrollToLetter(letter);
+            });
+        });
+    }
+
+    // Update alphabet filter with counts
+    updateAlphabetFilter() {
+        const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+        
+        // Count vocabularies for each letter
+        const letterCounts = {};
+        alphabet.forEach(letter => {
+            letterCounts[letter] = 0;
+        });
+
+        this.vocabularies.forEach(vocab => {
+            const firstLetter = vocab.englishWord.charAt(0).toUpperCase();
+            if (letterCounts.hasOwnProperty(firstLetter)) {
+                letterCounts[firstLetter]++;
+            }
+        });
+
+        // Update button states
+        alphabet.forEach(letter => {
+            const btn = document.querySelector(`.alphabet-btn[data-letter="${letter}"]`);
+            if (btn) {
+                const count = letterCounts[letter];
+                const countSpan = btn.querySelector('.count');
+                countSpan.textContent = count;
+
+                if (count === 0) {
+                    btn.classList.add('disabled');
+                    btn.disabled = true;
+                } else {
+                    btn.classList.remove('disabled');
+                    btn.disabled = false;
+                }
+            }
+        });
+    }
+
+    // Scroll to specific letter section
+    scrollToLetter(letter) {
+        const section = document.getElementById(`letter-${letter}`);
+        if (section) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.alphabet-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to clicked button
+            const btn = document.querySelector(`.alphabet-btn[data-letter="${letter}"]`);
+            if (btn) {
+                btn.classList.add('active');
+            }
+
+            // Scroll to section
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Remove active class after scrolling
+            setTimeout(() => {
+                if (btn) btn.classList.remove('active');
+            }, 1000);
+        }
     }
 }
 
