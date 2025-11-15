@@ -86,6 +86,34 @@
                     <!-- Answer buttons will be inserted here -->
                 </div>
             </div>
+
+            <!-- Exit Button (ล่างขวา) -->
+            <div class="quiz-exit-container">
+                <button class="quiz-exit-btn" id="exitQuizBtn" title="ออกจากแบบทดสอบ">
+                    ❌ ออก
+                </button>
+            </div>
+        </div>
+
+        <!-- Exit Confirmation Modal -->
+        <div class="modal-overlay" id="exitModal" style="display: none;">
+            <div class="modal-content exit-modal">
+                <div class="modal-header">
+                    <h3>⚠️ ยืนยันการออก</h3>
+                </div>
+                <div class="modal-body">
+                    <p>คุณต้องการออกจากแบบทดสอบจริงหรือไม่?</p>
+                    <p class="exit-warning">ความคืบหน้าจะไม่ถูกบันทึก</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" id="cancelExitBtn">
+                        ยกเลิก
+                    </button>
+                    <button class="btn btn-danger" id="confirmExitBtn">
+                        ออกจากแบบทดสอบ
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Results Screen -->
