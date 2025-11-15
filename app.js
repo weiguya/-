@@ -28,6 +28,17 @@ class VocabularyApp {
         const englishWord = document.getElementById('englishWord').value.trim();
         const thaiMeaning = document.getElementById('thaiMeaning').value.trim();
 
+        // Check for duplicate word (case-insensitive)
+        const isDuplicate = this.vocabularies.some(vocab => 
+            vocab.englishWord.toLowerCase() === englishWord.toLowerCase()
+        );
+
+        if (isDuplicate) {
+            // Show warning toast if word already exists
+            this.showToast(`⚠️ คำว่า "${englishWord}" มีอยู่ในระบบแล้ว!`);
+            return; // Don't add duplicate
+        }
+
         // Create vocabulary object
         const vocabulary = {
             id: Date.now(),
