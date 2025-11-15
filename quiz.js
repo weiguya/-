@@ -16,6 +16,7 @@ class VocabularyQuiz {
         this.loadVocabularies();
         this.setupQuizOptions();
         this.updateVocabCount();
+        this.setupExitButton();
     }
 
     // Load vocabularies from localStorage
@@ -300,6 +301,67 @@ class VocabularyQuiz {
         setTimeout(() => {
             toast.classList.remove('show');
         }, 3000);
+    }
+
+    // Setup exit button event listeners
+    setupExitButton() {
+        const exitBtn = document.getElementById('exitQuizBtn');
+        const exitModal = document.getElementById('exitModal');
+        const cancelBtn = document.getElementById('cancelExitBtn');
+        const confirmBtn = document.getElementById('confirmExitBtn');
+
+        // เปิด modal เมื่อกดปุ่มออก
+        if (exitBtn) {
+            exitBtn.addEventListener('click', () => {
+                exitModal.style.display = 'flex';
+                setTimeout(() => exitModal.classList.add('show'), 10);
+            });
+        }
+
+        // ปิด modal เมื่อกดยกเลิก
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                this.closeExitModal();
+            });
+        }
+
+        // ออกจากแบบทดสอบเมื่อกดยืนยัน
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', () => {
+                this.exitQuiz();
+            });
+        }
+
+        // ปิด modal เมื่อคลิกนอก modal
+        if (exitModal) {
+            exitModal.addEventListener('click', (e) => {
+                if (e.target === exitModal) {
+                    this.closeExitModal();
+                }
+            });
+        }
+
+        // ปิด modal เมื่อกด Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && exitModal.classList.contains('show')) {
+                this.closeExitModal();
+            }
+        });
+    }
+
+    // ปิด exit modal
+    closeExitModal() {
+        const exitModal = document.getElementById('exitModal');
+        exitModal.classList.remove('show');
+        setTimeout(() => {
+            exitModal.style.display = 'none';
+        }, 300);
+    }
+
+    // ออกจากแบบทดสอบ - กลับไปหน้าเลือกจำนวนข้อ
+    exitQuiz() {
+        // Reload หน้าเพื่อกลับไปหน้า setup
+        window.location.reload();
     }
 }
 
