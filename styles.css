@@ -911,6 +911,55 @@ body {
 
 .quiz-header {
     margin-bottom: 24px;
+    position: relative;
+}
+
+/* Container สำหรับปุ่มออก (ล่างขวา) */
+.quiz-exit-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+/* ปุ่มออกจากแบบทดสอบ */
+.quiz-exit-btn {
+    background: transparent;
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quiz-exit-btn:hover {
+    background: var(--danger-color);
+    color: white;
+    border-color: var(--danger-color);
+}
+
+/* Exit Modal */
+.exit-modal {
+    max-width: 400px;
+}
+
+.exit-warning {
+    color: var(--warning-color);
+    font-size: 14px;
+    margin-top: 8px;
+    font-weight: 600;
+}
+
+.btn-danger {
+    background: var(--danger-color);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
 }
 
 .quiz-progress-bar {
@@ -1436,4 +1485,188 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--text-muted);
+}
+
+/* ===== Alphabet Filter Sidebar ===== */
+.vocab-content-wrapper {
+    position: relative;
+    display: flex;
+    gap: 0;
+}
+
+.vocab-list {
+    flex: 1;
+    padding-right: 60px; /* Space for alphabet filter */
+}
+
+.alphabet-filter {
+    position: fixed;
+    right: max(calc((100vw - 1200px) / 2), 20px);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0; /* ไม่มีระยะห่าง ให้เส้นคั่นติดกัน */
+    background: #ffffff;
+    padding: 0; /* ไม่มี padding */
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    max-height: 85vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border: none; /* ไม่มีกรอบรอบนอก */
+}
+
+/* ซ่อน Scrollbar แต่ยังเลื่อนได้ */
+.alphabet-filter::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+
+.alphabet-filter {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+
+.alphabet-btn {
+    min-width: 60px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--border-color); /* เส้นคั่นด้านล่าง */
+    border-radius: 0; /* ไม่มีมุมมน */
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.alphabet-btn .letter {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.alphabet-btn .count {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-left: auto;
+    padding-left: 8px;
+}
+
+.alphabet-btn:hover:not(.disabled) {
+    background: var(--primary-color);
+    color: white;
+    border-bottom-color: var(--primary-color); /* เส้นคั่นเป็นสีเดียวกับพื้น */
+}
+
+.alphabet-btn:hover:not(.disabled) .letter {
+    color: white;
+}
+
+.alphabet-btn:hover:not(.disabled) .count {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.alphabet-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-bottom-color: var(--primary-color);
+}
+
+.alphabet-btn.active .letter {
+    color: white;
+}
+
+.alphabet-btn.active .count {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.alphabet-btn.disabled {
+    background: transparent;
+    color: var(--text-muted);
+    opacity: 0.5;
+    cursor: not-allowed;
+    border-bottom-color: var(--border-color);
+}
+
+.alphabet-btn.disabled .letter {
+    color: var(--text-muted);
+}
+
+.alphabet-btn.disabled .count {
+    color: var(--text-muted);
+}
+
+/* Smooth scroll for navigation */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Add ID to alphabet sections for navigation */
+.alphabet-section {
+    scroll-margin-top: 80px; /* Offset for header */
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .vocab-list {
+        padding-right: 50px;
+    }
+
+    .alphabet-filter {
+        right: 10px;
+        padding: 6px 4px;
+        gap: 3px;
+    }
+
+    .alphabet-btn {
+        min-width: 36px;
+        height: 28px;
+        padding: 3px 6px;
+        font-size: 12px;
+    }
+
+    .alphabet-btn .letter {
+        font-size: 13px;
+    }
+
+    .alphabet-btn .count {
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .vocab-list {
+        padding-right: 45px;
+    }
+
+    .alphabet-filter {
+        right: 8px;
+        padding: 5px 3px;
+        gap: 2px;
+    }
+
+    .alphabet-btn {
+        min-width: 32px;
+        height: 26px;
+        padding: 2px 5px;
+    }
+
+    .alphabet-btn .letter {
+        font-size: 12px;
+    }
+
+    .alphabet-btn .count {
+        font-size: 9px;
+        margin-left: 2px;
+    }
 }
