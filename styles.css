@@ -442,8 +442,7 @@ body {
 }
 
 .vocab-date {
-    font-size: 11px;
-    color: var(--text-muted);
+    display: none; /* ซ่อนวันที่-เวลา */
 }
 
 .vocab-actions {
@@ -1500,10 +1499,10 @@ body {
 }
 
 .alphabet-filter {
-    position: fixed;
+    position: sticky;
     right: max(calc((100vw - 1200px) / 2), 20px);
-    top: 50%;
-    transform: translateY(-50%);
+    top: 20px;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
     gap: 0; /* ไม่มีระยะห่าง ให้เส้นคั่นติดกัน */
@@ -1531,16 +1530,16 @@ body {
 
 .alphabet-btn {
     min-width: 60px;
-    height: 42px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 14px;
+    padding: 10px 14px;
     background: transparent;
     border: none;
     border-bottom: 1px solid var(--border-color); /* เส้นคั่นด้านล่าง */
     border-radius: 0; /* ไม่มีมุมมน */
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 600;
     color: var(--text-primary);
     cursor: pointer;
@@ -1549,13 +1548,13 @@ body {
 }
 
 .alphabet-btn .letter {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--text-primary);
 }
 
 .alphabet-btn .count {
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--text-secondary);
     margin-left: auto;
