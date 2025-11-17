@@ -181,10 +181,6 @@ class VocabularyListApp {
                         <div class="english-word">${this.escapeHtml(vocab.englishWord)}</div>
                         <div class="thai-meaning">${this.escapeHtml(vocab.thaiMeaning)}</div>
                     </div>
-                </div>
-                
-                <div class="vocab-footer">
-                    <span class="vocab-date">📅 ${this.formatDate(vocab.createdAt)}</span>
                     <div class="vocab-actions">
                         <button class="icon-btn edit-btn" onclick="app.editVocabulary(${vocab.id})" title="แก้ไข">
                             ✏️
