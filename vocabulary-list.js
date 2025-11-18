@@ -408,4 +408,25 @@ class VocabularyListApp {
             }
 
             // Add highlight class to letter header
-            const letterHeader = section.querySelector(
+            const letterHeader = section.querySelector('.alphabet-letter');
+            if (letterHeader) {
+                letterHeader.classList.add('highlight');
+            }
+
+            // Scroll to section
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Remove active class after scrolling
+            setTimeout(() => {
+                if (btn) btn.classList.remove('active');
+                if (letterHeader) letterHeader.classList.remove('highlight');
+            }, 2000);
+        }
+    }
+}
+
+// Initialize the app when DOM is ready
+let app;
+document.addEventListener('DOMContentLoaded', () => {
+    app = new VocabularyListApp();
+});
