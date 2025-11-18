@@ -14,35 +14,17 @@
                 <h1 class="app-title">📚 My Vocab Notes</h1>
                 <p class="app-subtitle">เรียนรู้คำศัพท์ใหม่ทุกวัน</p>
             </div>
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-number" id="totalWords">0</span>
-                    <span class="stat-label">คำทั้งหมด</span>
-                </div>
-            </div>
-            <a href="vocabulary-list.html" class="btn-view-all">
-                🔤 ดูคำศัพท์ทั้งหมด (A-Z)
-            </a>
         </header>
-
-        <!-- Quiz Section -->
-        <div class="card quiz-promo-section">
-            <div class="quiz-promo-content">
-                <div class="quiz-icon">🎯</div>
-                <div class="quiz-text">
-                    <h2 class="quiz-title">ทดสอบความรู้คำศัพท์</h2>
-                    <p class="quiz-subtitle">ทดสอบความจำของคุณด้วยแบบทดสอบสนุกๆ</p>
-                </div>
-                <a href="quiz.html" class="btn btn-quiz">
-                    <span class="btn-icon">🚀</span>
-                    เริ่มทดสอบ
-                </a>
-            </div>
-        </div>
 
         <!-- Add Word Form -->
         <div class="card add-word-section">
-            <h2 class="section-title">➕ เพิ่มคำศัพท์ใหม่</h2>
+            <div class="section-header-row">
+                <h2 class="section-title">➕ เพิ่มคำศัพท์ใหม่</h2>
+                <a href="vocabulary-list.html" class="vocab-count-badge" title="ดูคำศัพท์ทั้งหมด">
+                    <span class="count-number" id="totalWords">0</span>
+                    <span class="count-label">คำ</span>
+                </a>
+            </div>
             <form id="addWordForm" class="word-form">
                 <div class="form-group">
                     <label for="englishWord">คำศัพท์ภาษาอังกฤษ</label>
@@ -70,6 +52,21 @@
                     เพิ่มคำศัพท์
                 </button>
             </form>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="card quiz-promo-section">
+            <div class="quiz-promo-content">
+                <div class="quiz-icon">🎯</div>
+                <div class="quiz-text">
+                    <h2 class="quiz-title">ทดสอบความรู้คำศัพท์</h2>
+                    <p class="quiz-subtitle">ทดสอบความจำของคุณด้วยแบบทดสอบสนุกๆ</p>
+                </div>
+                <a href="quiz.html" class="btn btn-quiz">
+                    <span class="btn-icon">🚀</span>
+                    เริ่มทดสอบ
+                </a>
+            </div>
         </div>
     </div>
 
