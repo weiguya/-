@@ -66,7 +66,6 @@ body {
 
 .header-content {
     text-align: center;
-    margin-bottom: 24px;
 }
 
 .app-title {
@@ -82,10 +81,12 @@ body {
     font-weight: 400;
 }
 
+/* Stats - ใช้สำหรับหน้า vocabulary-list */
 .stats {
     display: flex;
     justify-content: center;
     gap: 24px;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 
@@ -113,6 +114,7 @@ body {
     font-weight: 600;
 }
 
+/* ปุ่มกลับหน้าแรก - ใช้สำหรับหน้า vocabulary-list */
 .btn-view-all {
     display: inline-flex;
     align-items: center;
@@ -138,6 +140,7 @@ body {
     box-shadow: var(--shadow-lg);
 }
 
+
 /* ===== Card ===== */
 .card {
     background: var(--bg-card);
@@ -153,6 +156,52 @@ body {
     font-weight: 600;
     margin-bottom: 20px;
     color: var(--text-primary);
+}
+
+.section-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 12px;
+}
+
+.section-header-row .section-title {
+    margin-bottom: 0;
+}
+
+.vocab-count-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+    cursor: pointer;
+}
+
+.vocab-count-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.vocab-count-badge:active {
+    transform: translateY(0);
+}
+
+.vocab-count-badge .count-number {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.vocab-count-badge .count-label {
+    font-size: 14px;
+    opacity: 0.9;
 }
 
 /* ===== Form Styles ===== */
@@ -336,6 +385,17 @@ body {
     border-bottom: 3px solid var(--primary-color);
     display: inline-block;
     min-width: 50px;
+    transition: all 0.3s ease;
+}
+
+.alphabet-letter.highlight {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+    color: white;
+    padding: 8px 16px;
+    border-radius: var(--radius-sm);
+    border-bottom: none;
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
 
 /* ===== Vocabulary List ===== */
@@ -349,9 +409,10 @@ body {
     background: var(--bg-card);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 14px 16px;
+    padding: 16px;
     transition: var(--transition);
     animation: slideIn 0.3s ease;
+    cursor: pointer;
 }
 
 @keyframes slideIn {
@@ -369,13 +430,17 @@ body {
     border-color: var(--primary-light);
     box-shadow: var(--shadow-md);
     transform: translateY(-2px);
+    background: #f8f9ff;
+}
+
+.vocab-item:active {
+    transform: translateY(0);
 }
 
 .vocab-header {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: 10px;
     gap: 12px;
 }
 
@@ -387,14 +452,15 @@ body {
     font-size: 18px;
     font-weight: 700;
     color: var(--primary-color);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     word-break: break-word;
 }
 
 .thai-meaning {
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-secondary);
     margin-bottom: 0;
+    line-height: 1.5;
 }
 
 .vocab-category {
@@ -1316,6 +1382,23 @@ body {
         font-size: 18px;
     }
     
+    .section-header-row {
+        gap: 8px;
+    }
+    
+    .vocab-count-badge {
+        padding: 6px 12px;
+        border-radius: 16px;
+    }
+    
+    .vocab-count-badge .count-number {
+        font-size: 18px;
+    }
+    
+    .vocab-count-badge .count-label {
+        font-size: 12px;
+    }
+    
     .filter-row {
         flex-direction: column;
     }
@@ -1329,7 +1412,7 @@ body {
     }
     
     .thai-meaning {
-        font-size: 13px;
+        font-size: 14px;
     }
     
     .vocab-header {
@@ -1344,8 +1427,18 @@ body {
         font-size: 20px;
     }
     
+    .alphabet-letter.highlight {
+        font-size: 20px;
+        padding: 6px 12px;
+    }
+    
     .vocab-item {
-        padding: 12px 14px;
+        padding: 14px;
+    }
+    
+    .english-word {
+        font-size: 17px;
+        margin-bottom: 5px;
     }
     
     .vocab-date {
