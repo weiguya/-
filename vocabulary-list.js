@@ -46,6 +46,10 @@ class VocabularyListApp {
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button class="btn btn-danger" onclick="app.deleteFromModal()" style="margin-right: auto;">
+                            <span class="btn-icon">🗑️</span>
+                            ลบคำศัพท์
+                        </button>
                         <button class="btn btn-secondary" onclick="app.closeEditModal()">
                             ยกเลิก
                         </button>
@@ -120,6 +124,18 @@ class VocabularyListApp {
         }
     }
 
+    // Delete vocabulary from modal
+    deleteFromModal() {
+        if (confirm('คุณแน่ใจหรือไม่ที่จะลบคำศัพท์นี้?')) {
+            this.vocabularies = this.vocabularies.filter(vocab => vocab.id !== this.currentEditId);
+            this.saveToLocalStorage();
+            this.closeEditModal();
+            this.renderVocabularies();
+            this.updateStats();
+            this.showToast('ลบคำศัพท์เรียบร้อยแล้ว 🗑️');
+        }
+    }
+
     // Render vocabularies in A-Z format
     renderVocabularies() {
         const vocabList = document.getElementById('vocabList');
@@ -175,19 +191,11 @@ class VocabularyListApp {
     // Create vocab item HTML
     createVocabItemHTML(vocab) {
         return `
-            <div class="vocab-item">
+            <div class="vocab-item" ondblclick="app.editVocabulary(${vocab.id})" title="ดับเบิลคลิกเพื่อแก้ไข">
                 <div class="vocab-header">
                     <div class="vocab-word">
                         <div class="english-word">${this.escapeHtml(vocab.englishWord)}</div>
                         <div class="thai-meaning">${this.escapeHtml(vocab.thaiMeaning)}</div>
-                    </div>
-                    <div class="vocab-actions">
-                        <button class="icon-btn edit-btn" onclick="app.editVocabulary(${vocab.id})" title="แก้ไข">
-                            ✏️
-                        </button>
-                        <button class="icon-btn delete-btn" onclick="app.deleteVocabulary(${vocab.id})" title="ลบ">
-                            🗑️
-                        </button>
                     </div>
                 </div>
             </div>
@@ -385,9 +393,12 @@ class VocabularyListApp {
     scrollToLetter(letter) {
         const section = document.getElementById(`letter-${letter}`);
         if (section) {
-            // Remove active class from all buttons
+            // Remove active class from all buttons and letter headers
             document.querySelectorAll('.alphabet-btn').forEach(btn => {
                 btn.classList.remove('active');
+            });
+            document.querySelectorAll('.alphabet-letter').forEach(letterEl => {
+                letterEl.classList.remove('highlight');
             });
 
             // Add active class to clicked button
@@ -396,19 +407,5 @@ class VocabularyListApp {
                 btn.classList.add('active');
             }
 
-            // Scroll to section
-            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-            // Remove active class after scrolling
-            setTimeout(() => {
-                if (btn) btn.classList.remove('active');
-            }, 1000);
-        }
-    }
-}
-
-// Initialize the app when DOM is ready
-let app;
-document.addEventListener('DOMContentLoaded', () => {
-    app = new VocabularyListApp();
-});
+            // Add highlight class to letter header
+            const letterHeader = section.querySelector(
