@@ -90,7 +90,7 @@ class VocabularyQuiz {
         const selectedVocabs = shuffled.slice(0, count);
         
         this.quizQuestions = selectedVocabs.map(vocab => {
-            // Get wrong answers from other vocabularies
+            // Get wrong answers from other vocabularies (ซ้ำข้ามข้อได้ แต่ในข้อเดียวกันไม่ซ้ำ)
             const wrongAnswers = this.getWrongAnswers(vocab, 3);
             
             // Create all options (1 correct + 3 wrong)
@@ -111,11 +111,46 @@ class VocabularyQuiz {
         });
     }
 
-    // Get wrong answers from other vocabularies
+    // Get wrong answers from other vocabularies (ในข้อเดียวกันไม่ซ้ำ)
     getWrongAnswers(currentVocab, count) {
+        // กรองเฉพาะคำที่ไม่ใช่คำตอบที่ถูก
         const otherVocabs = this.vocabularies.filter(v => v.id !== currentVocab.id);
+        
+        // สุ่มและเลือก
         const shuffled = otherVocabs.sort(() => Math.random() - 0.5);
-        return shuffled.slice(0, count).map(v => v.thaiMeaning);
+        const selectedWrong = shuffled.slice(0, count);
+        
+        // ดึงเฉพาะความหมาย และเช็คว่าไม่ซ้ำกันในข้อเดียวกัน
+        const uniqueMeanings = [];
+        const usedInQuestion = new Set([currentVocab.thaiMeaning]); // เก็บคำที่ใช้แล้วในข้อนี้
+        
+        for (const vocab of selectedWrong) {
+            if (!usedInQuestion.has(vocab.thaiMeaning)) {
+                uniqueMeanings.push(vocab.thaiMeaning);
+                usedInQuestion.add(vocab.thaiMeaning);
+            }
+            
+            // ถ้าได้ครบตามที่ต้องการแล้ว หยุด
+            if (uniqueMeanings.length >= count) {
+                break;
+            }
+        }
+        
+        // ถ้ายังไม่ครบ (กรณีคำศัพท์น้อยมาก) ให้เติมจาก shuffled ที่เหลือ
+        if (uniqueMeanings.length < count) {
+            for (const vocab of shuffled) {
+                if (!usedInQuestion.has(vocab.thaiMeaning) && vocab.id !== currentVocab.id) {
+                    uniqueMeanings.push(vocab.thaiMeaning);
+                    usedInQuestion.add(vocab.thaiMeaning);
+                    
+                    if (uniqueMeanings.length >= count) {
+                        break;
+                    }
+                }
+            }
+        }
+        
+        return uniqueMeanings;
     }
 
     // Show current question
