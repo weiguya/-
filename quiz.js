@@ -89,17 +89,34 @@ class VocabularyQuiz {
         const shuffled = [...this.vocabularies].sort(() => Math.random() - 0.5);
         const selectedVocabs = shuffled.slice(0, count);
         
+        // เช็คว่ามีคำศัพท์พอสำหรับโหมดไม่ซ้ำเลยหรือไม่
+        const requiredVocabs = count * 4; // แต่ละข้อต้องการ 4 ตัวเลือก
+        const useStrictMode = this.vocabularies.length >= requiredVocabs;
+        
+        if (useStrictMode) {
+            // แบบที่ 1: ไม่ซ้ำเลยทั้ง Quiz (เมื่อมีคำเพียงพอ)
+            this.generateQuestionsStrictMode(selectedVocabs);
+        } else {
+            // แบบที่ 2: ซ้ำข้ามข้อได้ (เมื่อคำไม่พอ)
+            this.generateQuestionsFlexibleMode(selectedVocabs);
+        }
+    }
+
+    // แบบที่ 1: Strict Mode - ไม่ซ้ำเลยทั้ง Quiz
+    generateQuestionsStrictMode(selectedVocabs) {
+        const usedMeanings = new Set();
+        
         this.quizQuestions = selectedVocabs.map(vocab => {
-            // Get wrong answers from other vocabularies (ซ้ำข้ามข้อได้ แต่ในข้อเดียวกันไม่ซ้ำ)
-            const wrongAnswers = this.getWrongAnswers(vocab, 3);
+            usedMeanings.add(vocab.thaiMeaning);
             
-            // Create all options (1 correct + 3 wrong)
+            const wrongAnswers = this.getWrongAnswersStrict(vocab, 3, usedMeanings);
+            wrongAnswers.forEach(answer => usedMeanings.add(answer));
+            
             const allOptions = [
                 { text: vocab.thaiMeaning, isCorrect: true },
                 ...wrongAnswers.map(wa => ({ text: wa, isCorrect: false }))
             ];
             
-            // Shuffle options so correct answer isn't always first
             const shuffledOptions = allOptions.sort(() => Math.random() - 0.5);
             
             return {
@@ -111,42 +128,53 @@ class VocabularyQuiz {
         });
     }
 
-    // Get wrong answers from other vocabularies (ในข้อเดียวกันไม่ซ้ำ)
-    getWrongAnswers(currentVocab, count) {
-        // กรองเฉพาะคำที่ไม่ใช่คำตอบที่ถูก
+    // แบบที่ 2: Flexible Mode - ซ้ำข้ามข้อได้
+    generateQuestionsFlexibleMode(selectedVocabs) {
+        this.quizQuestions = selectedVocabs.map(vocab => {
+            const wrongAnswers = this.getWrongAnswersFlexible(vocab, 3);
+            
+            const allOptions = [
+                { text: vocab.thaiMeaning, isCorrect: true },
+                ...wrongAnswers.map(wa => ({ text: wa, isCorrect: false }))
+            ];
+            
+            const shuffledOptions = allOptions.sort(() => Math.random() - 0.5);
+            
+            return {
+                englishWord: vocab.englishWord,
+                correctAnswer: vocab.thaiMeaning,
+                options: shuffledOptions,
+                id: vocab.id
+            };
+        });
+    }
+
+    // Get wrong answers - Strict Mode (ไม่ซ้ำกับที่ใช้ไปแล้วทั้ง Quiz)
+    getWrongAnswersStrict(currentVocab, count, usedMeanings) {
+        const availableVocabs = this.vocabularies.filter(v => 
+            v.id !== currentVocab.id && !usedMeanings.has(v.thaiMeaning)
+        );
+        
+        const shuffled = availableVocabs.sort(() => Math.random() - 0.5);
+        return shuffled.slice(0, count).map(v => v.thaiMeaning);
+    }
+
+    // Get wrong answers - Flexible Mode (ซ้ำข้ามข้อได้ แต่ในข้อเดียวกันไม่ซ้ำ)
+    getWrongAnswersFlexible(currentVocab, count) {
         const otherVocabs = this.vocabularies.filter(v => v.id !== currentVocab.id);
-        
-        // สุ่มและเลือก
         const shuffled = otherVocabs.sort(() => Math.random() - 0.5);
-        const selectedWrong = shuffled.slice(0, count);
         
-        // ดึงเฉพาะความหมาย และเช็คว่าไม่ซ้ำกันในข้อเดียวกัน
         const uniqueMeanings = [];
-        const usedInQuestion = new Set([currentVocab.thaiMeaning]); // เก็บคำที่ใช้แล้วในข้อนี้
+        const usedInQuestion = new Set([currentVocab.thaiMeaning]);
         
-        for (const vocab of selectedWrong) {
+        for (const vocab of shuffled) {
             if (!usedInQuestion.has(vocab.thaiMeaning)) {
                 uniqueMeanings.push(vocab.thaiMeaning);
                 usedInQuestion.add(vocab.thaiMeaning);
             }
             
-            // ถ้าได้ครบตามที่ต้องการแล้ว หยุด
             if (uniqueMeanings.length >= count) {
                 break;
-            }
-        }
-        
-        // ถ้ายังไม่ครบ (กรณีคำศัพท์น้อยมาก) ให้เติมจาก shuffled ที่เหลือ
-        if (uniqueMeanings.length < count) {
-            for (const vocab of shuffled) {
-                if (!usedInQuestion.has(vocab.thaiMeaning) && vocab.id !== currentVocab.id) {
-                    uniqueMeanings.push(vocab.thaiMeaning);
-                    usedInQuestion.add(vocab.thaiMeaning);
-                    
-                    if (uniqueMeanings.length >= count) {
-                        break;
-                    }
-                }
             }
         }
         
