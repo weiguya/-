@@ -1711,7 +1711,7 @@ html {
 /* Mobile Responsive */
 @media (max-width: 768px) {
     .vocab-list {
-        padding-right: 50px;
+        padding-right: 55px;
     }
 
     .alphabet-filter {
@@ -1721,24 +1721,24 @@ html {
     }
 
     .alphabet-btn {
-        min-width: 36px;
-        height: 28px;
-        padding: 3px 6px;
-        font-size: 12px;
-    }
-
-    .alphabet-btn .letter {
+        min-width: 42px;
+        height: 32px;
+        padding: 4px 7px;
         font-size: 13px;
     }
 
+    .alphabet-btn .letter {
+        font-size: 18px;
+    }
+
     .alphabet-btn .count {
-        font-size: 10px;
+        font-size: 13px;
     }
 }
 
 @media (max-width: 480px) {
     .vocab-list {
-        padding-right: 45px;
+        padding-right: 50px;
     }
 
     .alphabet-filter {
@@ -1748,17 +1748,17 @@ html {
     }
 
     .alphabet-btn {
-        min-width: 32px;
-        height: 26px;
-        padding: 2px 5px;
+        min-width: 40px;
+        height: 30px;
+        padding: 3px 6px;
     }
 
     .alphabet-btn .letter {
-        font-size: 12px;
+        font-size: 17px;
     }
 
     .alphabet-btn .count {
-        font-size: 9px;
+        font-size: 12px;
         margin-left: 2px;
     }
 }
